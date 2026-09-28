@@ -1,0 +1,15 @@
+# Dependencias
+node_modules/
+package-lock.json
+
+# Archivos generados o de prueba
+*.tmp
+*.temp
+.cache/
+.env
+.env.local
+
+# Navegadores (caché y temp)
+.DS_Store
+Thumbs.db
+desktop.ini
