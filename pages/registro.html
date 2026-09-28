@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NotiPoliWeb — Registro</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="header">
+    <div class="header__container">
+      <a href="../index.html" class="header__logo">📰 NotiPoliWeb</a>
+
+      <nav class="header__nav">
+        <a href="../index.html" class="header__link">Inicio</a>
+        <a href="noticias.html" class="header__link">Noticias</a>
+        <a href="favoritos.html" class="header__link">Favoritos</a>
+        <a href="contacto.html" class="header__link">Contacto</a>
+        <a href="acerca-de.html" class="header__link">Acerca de</a>
+      </nav>
+
+      <div class="header__account" id="accountDropdown">
+        <button class="header__account-btn" id="accountBtn">
+          👤 <span id="accountLabel">Mi cuenta</span> ▼
+        </button>
+        <div class="header__account-menu" id="accountMenu"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== CONTENEDOR REGISTRO ==================== -->
+  <main class="auth">
+    <div class="auth__card">
+
+      <h1 class="auth__titulo">Mi cuenta</h1>
+      <p class="auth__subtitulo">
+        Crea tu cuenta para guardar y gestionar tus favoritos.
+      </p>
+
+      <!-- Tabs -->
+      <div class="auth__tabs">
+        <button class="auth__tab" data-tab="login" onclick="window.location.href='login.html'">Iniciar sesión</button>
+        <button class="auth__tab auth__tab--active" data-tab="registro">Registrarse</button>
+      </div>
+
+      <!-- Mensaje de error global -->
+      <div class="alert alert--error" id="registroError" style="display:none;"></div>
+
+      <!-- Formulario -->
+      <form class="auth__form" id="registroForm" novalidate>
+
+        <div class="form__group">
+          <label for="nombre" class="form__label">Nombre *</label>
+          <input type="text" id="nombre" name="nombre" class="form__input"
+                 placeholder="Ingresa tu nombre" autocomplete="given-name">
+          <span class="form__error" id="errorNombre"></span>
+        </div>
+
+        <div class="form__group">
+          <label for="apellido" class="form__label">Apellido *</label>
+          <input type="text" id="apellido" name="apellido" class="form__input"
+                 placeholder="Ingresa tu apellido" autocomplete="family-name">
+          <span class="form__error" id="errorApellido"></span>
+        </div>
+
+        <div class="form__group">
+          <label for="correo" class="form__label">Correo electrónico *</label>
+          <input type="email" id="correo" name="correo" class="form__input"
+                 placeholder="ejemplo@correo.com" autocomplete="email">
+          <span class="form__error" id="errorCorreo"></span>
+        </div>
+
+        <div class="form__group">
+          <label for="password" class="form__label">Contraseña *</label>
+          <div class="form__password-wrapper">
+            <input type="password" id="password" name="password" class="form__input"
+                   placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+            <button type="button" class="form__toggle-password" id="togglePassword"
+                    aria-label="Mostrar contraseña">👁</button>
+          </div>
+          <span class="form__error" id="errorPassword"></span>
+        </div>
+
+        <div class="form__group">
+          <label for="password2" class="form__label">Confirmar contraseña *</label>
+          <div class="form__password-wrapper">
+            <input type="password" id="password2" name="password2" class="form__input"
+                   placeholder="Repite tu contraseña" autocomplete="new-password">
+            <button type="button" class="form__toggle-password" id="togglePassword2"
+                    aria-label="Mostrar contraseña">👁</button>
+          </div>
+          <span class="form__error" id="errorPassword2"></span>
+        </div>
+
+        <div class="form__group">
+          <label class="auth__checkbox auth__checkbox--terms">
+            <input type="checkbox" id="terminos">
+            <span>Acepto los <a href="#" class="auth__link">Términos y condiciones</a> y la
+            <a href="#" class="auth__link">Política de privacidad</a> *</span>
+          </label>
+          <span class="form__error" id="errorTerminos"></span>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--full" id="btnRegistro">
+          Crear cuenta
+        </button>
+
+      </form>
+
+      <p class="auth__pie">
+        ¿Ya tienes cuenta?
+        <a href="login.html" class="auth__link">Inicia sesión aquí</a>
+      </p>
+
+    </div>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__col">
+        <p>© 2026 NotiPoliWeb. Todos los derechos reservados.</p>
+      </div>
+      <div class="footer__col">
+        <p>contacto@notipoliweb.com</p>
+      </div>
+      <div class="footer__col">
+        <a href="#">Facebook</a>
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/auth.js"></script>
+</body>
+</html>

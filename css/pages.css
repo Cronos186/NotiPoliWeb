@@ -627,3 +627,38 @@
   .auth__titulo { font-size: 24px; }
   .auth__extras { flex-direction: column; align-items: flex-start; }
 }
+
+/* ==================== CHECKBOX DE TÉRMINOS ==================== */
+.auth__checkbox--terms {
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.5;
+}
+
+.auth__checkbox--terms input {
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.auth__checkbox--terms span {
+  font-size: 13px;
+  color: #374151;
+}
+
+/* ==================== ERROR EN CHECKBOX ==================== */
+.auth__checkbox--error {
+  outline: 2px solid #DC2626;
+  outline-offset: 2px;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+/* ==================== FORM GROUP CON MÁS ESPACIO ==================== */
+.auth__form .form__group {
+  margin-bottom: 20px;
+}
+
+.auth__form .form__error {
+  min-height: 16px;
+  font-size: 12.5px;
+}
