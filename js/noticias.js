@@ -5,20 +5,6 @@
 
 let noticiasCache = [];
 
-/* ---------- CARGA DE NOTICIAS ---------- */
-async function cargarNoticias() {
-  try {
-    const base = getBasePath();
-    const res = await fetch(base + 'data/noticias.json');
-    const data = await res.json();
-    noticiasCache = data.noticias;
-    return noticiasCache;
-  } catch (err) {
-    console.error('Error cargando noticias:', err);
-    return [];
-  }
-}
-
 /* ---------- RENDER DE CARDS ---------- */
 function renderCards(noticias, containerId) {
   const container = document.getElementById(containerId);
@@ -79,3 +65,23 @@ document.addEventListener('DOMContentLoaded', async () => {
   const noticias = await cargarNoticias();
   renderCards(noticias, 'destacadasGrid');
 });
+
+/* ---------- FILTRAR NOTICIAS ELIMINADAS ---------- */
+function filtrarEliminadas(noticias) {
+  const eliminadas = JSON.parse(localStorage.getItem('notipoliweb_eliminadas') || '[]');
+  return noticias.filter(n => !eliminadas.includes(n.id));
+}
+
+/* ---------- CARGA DE NOTICIAS ---------- */
+async function cargarNoticias() {
+  try {
+    const base = getBasePath();
+    const res = await fetch(base + 'data/noticias.json');
+    const data = await res.json();
+    noticiasCache = filtrarEliminadas(data.noticias);
+    return noticiasCache;
+  } catch (err) {
+    console.error('Error cargando noticias:', err);
+    return [];
+  }
+}

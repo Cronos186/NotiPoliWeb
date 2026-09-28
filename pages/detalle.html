@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NotiPoliWeb — Detalle de la Noticia</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="header">
+    <div class="header__container">
+      <a href="../index.html" class="header__logo">📰 NotiPoliWeb</a>
+
+      <nav class="header__nav">
+        <a href="../index.html" class="header__link">Inicio</a>
+        <a href="noticias.html" class="header__link">Noticias</a>
+        <a href="favoritos.html" class="header__link">Favoritos</a>
+        <a href="contacto.html" class="header__link">Contacto</a>
+        <a href="acerca-de.html" class="header__link">Acerca de</a>
+      </nav>
+
+      <div class="header__account" id="accountDropdown">
+        <button class="header__account-btn" id="accountBtn">
+          👤 <span id="accountLabel">Mi cuenta</span> ▼
+        </button>
+        <div class="header__account-menu" id="accountMenu"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== CONTENIDO ==================== -->
+  <main class="detalle" id="detalleContainer">
+    <!-- Se renderiza dinámicamente desde detalle.js -->
+  </main>
+
+  <!-- ==================== NOTICIAS RELACIONADAS ==================== -->
+  <section class="section section--gray" id="relacionadasSection" style="display:none;">
+    <h2 class="section__title">Noticias Relacionadas</h2>
+    <div class="cards cards--grid-4" id="relacionadasGrid"></div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__col">
+        <p>© 2026 NotiPoliWeb. Todos los derechos reservados.</p>
+      </div>
+      <div class="footer__col">
+        <p>contacto@notipoliweb.com</p>
+      </div>
+      <div class="footer__col">
+        <a href="#">Facebook</a>
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/noticias.js"></script>
+  <script src="../js/detalle.js"></script>
+</body>
+</html>

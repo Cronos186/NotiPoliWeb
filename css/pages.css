@@ -62,3 +62,124 @@
   font-style: italic;
   padding: 40px 0;
 }
+
+/* ==================== DETALLE DE NOTICIA ==================== */
+.detalle {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.detalle__article {
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.06);
+}
+
+.detalle__img {
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  background: #E5E7EB;
+}
+
+.detalle__meta {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #6B7280;
+}
+
+.detalle__fecha,
+.detalle__autor {
+  font-size: 14px;
+}
+
+.detalle__titulo {
+  font-size: 36px;
+  color: #1E3A8A;
+  margin-bottom: 24px;
+  line-height: 1.2;
+}
+
+.detalle__contenido {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #374151;
+  margin-bottom: 32px;
+  white-space: pre-line;
+}
+
+.detalle__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #E5E7EB;
+}
+
+.detalle__volver {
+  display: inline-block;
+  color: #1E3A8A;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.detalle__volver:hover {
+  text-decoration: underline;
+}
+
+/* ==================== BOTONES ADICIONALES ==================== */
+.btn--secondary {
+  background: #1E3A8A;
+  color: #FFFFFF;
+}
+
+.btn--secondary:hover {
+  background: #1E40AF;
+}
+
+.btn--danger {
+  background: #DC2626;
+  color: #FFFFFF;
+}
+
+.btn--danger:hover {
+  background: #B91C1C;
+}
+
+.btn--active {
+  background: #DC2626;
+  color: #FFFFFF;
+}
+
+/* ==================== ESTADO DE ERROR ==================== */
+.detalle__error {
+  text-align: center;
+  padding: 80px 40px;
+  background: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.06);
+}
+
+.detalle__error h2 {
+  color: #1E3A8A;
+  margin-bottom: 24px;
+  font-size: 24px;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+  .detalle { padding: 20px; }
+  .detalle__article { padding: 24px; }
+  .detalle__img { height: 220px; }
+  .detalle__titulo { font-size: 26px; }
+}
