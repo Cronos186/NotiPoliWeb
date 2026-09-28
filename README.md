@@ -80,3 +80,15 @@ notipoliweb/
 ├── mockups/                      # De la Entrega 1
 └── docs/                         # Documentación y PDFs
 ```
+
+### Descripción de carpetas
+
+| Carpeta | Contenido |
+|---------|-----------|
+| `pages/` | Vistas HTML internas del aplicativo |
+| `css/` | Hojas de estilo (global, componentes y páginas) |
+| `js/` | Lógica JavaScript organizada por responsabilidad |
+| `data/` | Archivos JSON semilla (noticias, usuarios, favoritos, creadas) |
+| `assets/` | Recursos estáticos (imágenes, íconos) |
+| `mockups/` | Wireframes SVG de la Entrega 1 |
+| `docs/` | Documentación y PDFs de las entregas |
