@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NotiPoliWeb — Acerca de</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="header">
+    <div class="header__container">
+      <a href="../index.html" class="header__logo">📰 NotiPoliWeb</a>
+
+      <nav class="header__nav">
+        <a href="../index.html" class="header__link">Inicio</a>
+        <a href="noticias.html" class="header__link">Noticias</a>
+        <a href="favoritos.html" class="header__link">Favoritos</a>
+        <a href="contacto.html" class="header__link">Contacto</a>
+        <a href="acerca-de.html" class="header__link header__link--active">Acerca de</a>
+      </nav>
+
+      <div class="header__account" id="accountDropdown">
+        <button class="header__account-btn" id="accountBtn">
+          👤 <span id="accountLabel">Mi cuenta</span> ▼
+        </button>
+        <div class="header__account-menu" id="accountMenu"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== HERO ACERCA DE ==================== -->
+  <section class="acerca__hero">
+    <h1 class="acerca__titulo">Acerca de NotiPoliWeb</h1>
+    <p class="acerca__subtitulo">
+      Un espacio digital donde las experiencias educativas, tecnológicas,
+      turísticas y comerciales encuentran su voz.
+    </p>
+  </section>
+
+  <!-- ==================== QUIÉNES SOMOS ==================== -->
+  <section class="section">
+    <div class="acerca__quienes">
+      <div class="acerca__quienes-texto">
+        <h2 class="section__title">¿Quiénes somos?</h2>
+        <p class="acerca__parrafo">
+          <strong>NotiPoliWeb</strong> nació como una iniciativa para conectar a la comunidad
+          con las historias que importan. Somos un equipo de estudiantes y profesionales
+          apasionados por el periodismo digital y la tecnología.
+        </p>
+        <p class="acerca__parrafo">
+          Nuestra plataforma permite a los usuarios no solo leer noticias, sino también
+          publicar sus propias experiencias, guardar sus favoritos y participar activamente
+          en la construcción de un espacio informativo colaborativo.
+        </p>
+        <p class="acerca__parrafo">
+          Creemos que la información debe ser accesible, veraz y cercana. Por eso trabajamos
+          cada día para ofrecer una experiencia intuitiva, moderna y útil para todos.
+        </p>
+      </div>
+
+      <div class="acerca__quienes-imagen">
+        <div class="acerca__imagen-placeholder">
+          <span>📰</span>
+          <p>Equipo NotiPoliWeb</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ESTADÍSTICAS ==================== -->
+  <section class="section section--gray">
+    <h2 class="section__title" style="text-align:center;">NotiPoliWeb en números</h2>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat__numero" id="statNoticias">0</span>
+        <span class="stat__label">Noticias publicadas</span>
+      </div>
+      <div class="stat">
+        <span class="stat__numero" id="statCategorias">4</span>
+        <span class="stat__label">Categorías activas</span>
+      </div>
+      <div class="stat">
+        <span class="stat__numero" id="statUsuarios">0</span>
+        <span class="stat__label">Usuarios registrados</span>
+      </div>
+      <div class="stat">
+        <span class="stat__numero">100%</span>
+        <span class="stat__label">Gratuito y abierto</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== NUESTROS PILARES ==================== -->
+  <section class="section">
+    <h2 class="section__title">Nuestros Pilares</h2>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar__icon">🎯</div>
+        <h3 class="pillar__title">Misión</h3>
+        <p class="pillar__text">
+          Ofrecer un espacio digital accesible donde las personas puedan informarse,
+          compartir experiencias y construir comunidad en torno a la información veraz.
+        </p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar__icon">👁</div>
+        <h3 class="pillar__title">Visión</h3>
+        <p class="pillar__text">
+          Ser la plataforma de referencia regional para la publicación de noticias
+          colaborativas, reconocida por su diseño intuitivo y su compromiso con la verdad.
+        </p>
+      </div>
+
+      <div class="pillar">
+        <div class="pillar__icon">💛</div>
+        <h3 class="pillar__title">Valores</h3>
+        <p class="pillar__text">
+          Transparencia, respeto por la diversidad de opiniones, innovación constante
+          y compromiso con el acceso libre a la información.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CTA CONTACTO ==================== -->
+  <section class="section section--gray">
+    <div class="cta">
+      <h2 class="cta__title">¿Quieres saber más?</h2>
+      <p class="cta__text">
+        Escríbenos y te responderemos lo antes posible.
+      </p>
+      <a href="contacto.html" class="btn btn--primary">Ir a Contacto</a>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__col">
+        <p>© 2026 NotiPoliWeb. Todos los derechos reservados.</p>
+      </div>
+      <div class="footer__col">
+        <p>contacto@notipoliweb.com</p>
+      </div>
+      <div class="footer__col">
+        <a href="#">Facebook</a>
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/acerca.js"></script>
+</body>
+</html>
