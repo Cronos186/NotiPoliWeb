@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NotiPoliWeb — Contacto</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="header">
+    <div class="header__container">
+      <a href="../index.html" class="header__logo">📰 NotiPoliWeb</a>
+
+      <nav class="header__nav">
+        <a href="../index.html" class="header__link">Inicio</a>
+        <a href="noticias.html" class="header__link">Noticias</a>
+        <a href="favoritos.html" class="header__link">Favoritos</a>
+        <a href="contacto.html" class="header__link header__link--active">Contacto</a>
+        <a href="acerca-de.html" class="header__link">Acerca de</a>
+      </nav>
+
+      <div class="header__account" id="accountDropdown">
+        <button class="header__account-btn" id="accountBtn">
+          👤 <span id="accountLabel">Mi cuenta</span> ▼
+        </button>
+        <div class="header__account-menu" id="accountMenu"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== CONTACTO ==================== -->
+  <main class="contacto">
+    <div class="contacto__header">
+      <h1 class="contacto__titulo">Contáctanos</h1>
+      <p class="contacto__subtitulo">
+        ¿Tienes alguna pregunta o sugerencia? Escríbenos y te responderemos pronto.
+      </p>
+    </div>
+
+    <!-- Mensaje de éxito (oculto por defecto) -->
+    <div class="alert alert--success" id="successMessage" style="display:none;">
+      ✅ ¡Gracias por contactarnos! Hemos recibido tu mensaje y te responderemos pronto.
+    </div>
+
+    <!-- Formulario -->
+    <form class="contacto__form" id="contactoForm" novalidate>
+      <div class="form__group">
+        <label for="nombre" class="form__label">Nombre *</label>
+        <input type="text" id="nombre" name="nombre" class="form__input"
+               placeholder="Ingresa tu nombre completo" autocomplete="name">
+        <span class="form__error" id="errorNombre"></span>
+      </div>
+
+      <div class="form__group">
+        <label for="correo" class="form__label">Correo electrónico *</label>
+        <input type="email" id="correo" name="correo" class="form__input"
+               placeholder="tu@correo.com" autocomplete="email">
+        <span class="form__error" id="errorCorreo"></span>
+      </div>
+
+      <div class="form__group">
+        <label for="asunto" class="form__label">Asunto</label>
+        <input type="text" id="asunto" name="asunto" class="form__input"
+               placeholder="Asunto del mensaje" autocomplete="off">
+      </div>
+
+      <div class="form__group">
+        <label for="mensaje" class="form__label">Mensaje *</label>
+        <textarea id="mensaje" name="mensaje" class="form__input form__textarea"
+                  placeholder="Escribe tu mensaje..." rows="6"></textarea>
+        <span class="form__error" id="errorMensaje"></span>
+      </div>
+
+      <button type="submit" class="btn btn--primary btn--full" id="btnEnviar">
+        Enviar Mensaje
+      </button>
+    </form>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__col">
+        <p>© 2026 NotiPoliWeb. Todos los derechos reservados.</p>
+      </div>
+      <div class="footer__col">
+        <p>contacto@notipoliweb.com</p>
+      </div>
+      <div class="footer__col">
+        <a href="#">Facebook</a>
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/contacto.js"></script>
+</body>
+</html>
