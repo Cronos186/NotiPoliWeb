@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NotiPoliWeb — Inicio</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="header">
+    <div class="header__container">
+      <a href="index.html" class="header__logo">📰 NotiPoliWeb</a>
+
+      <nav class="header__nav">
+        <a href="index.html" class="header__link header__link--active">Inicio</a>
+        <a href="pages/noticias.html" class="header__link">Noticias</a>
+        <a href="pages/favoritos.html" class="header__link">Favoritos</a>
+        <a href="pages/contacto.html" class="header__link">Contacto</a>
+        <a href="pages/acerca-de.html" class="header__link">Acerca de</a>
+      </nav>
+
+      <!-- Botón Mi cuenta con dropdown -->
+      <div class="header__account" id="accountDropdown">
+        <button class="header__account-btn" id="accountBtn">
+          👤 <span id="accountLabel">Mi cuenta</span> ▼
+        </button>
+        <div class="header__account-menu" id="accountMenu">
+          <!-- Se rellena dinámicamente con JS según sesión -->
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero">
+    <div class="hero__content">
+      <h1 class="hero__title">¡Bienvenido a NotiPoliWeb!</h1>
+      <p class="hero__subtitle">
+        Tu periódico digital de experiencias educativas, tecnológicas, turísticas y comerciales.
+      </p>
+      <div class="hero__actions">
+        <a href="pages/noticias.html" class="btn btn--primary">Explorar Noticias</a>
+        <a href="pages/contacto.html" class="btn btn--outline">Contactar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== NOTICIAS DESTACADAS ==================== -->
+  <section class="section">
+    <h2 class="section__title">Noticias Destacadas</h2>
+    <div class="cards" id="destacadasGrid">
+      <!-- Se renderiza dinámicamente desde noticias.json -->
+    </div>
+  </section>
+
+  <!-- ==================== TESTIMONIOS ==================== -->
+  <section class="section section--gray">
+    <h2 class="section__title">Lo que dicen nuestros usuarios</h2>
+    <div class="testimonial">
+      <p class="testimonial__text">
+        "Excelente plataforma, muy fácil de usar y con contenido de calidad."
+      </p>
+      <span class="testimonial__author">— María González</span>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__col">
+        <p>© 2026 NotiPoliWeb. Todos los derechos reservados.</p>
+      </div>
+      <div class="footer__col">
+        <p>contacto@notipoliweb.com</p>
+      </div>
+      <div class="footer__col">
+        <a href="#">Facebook</a>
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/noticias.js"></script>
+</body>
+</html>

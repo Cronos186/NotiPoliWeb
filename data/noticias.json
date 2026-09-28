@@ -1,0 +1,37 @@
+{
+  "noticias": [
+    {
+      "id": 1,
+      "titulo": "Innovación Educativa",
+      "categoria": "Educación",
+      "imagen": "https://picsum.photos/400/200?random=1",
+      "descripcion": "Nuevas metodologías transforman el aula.",
+      "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      "fecha": "2026-08-10",
+      "autorEmail": "juan@mail.com",
+      "autorNombre": "Juan Pérez"
+    },
+    {
+      "id": 2,
+      "titulo": "Turismo Sostenible",
+      "categoria": "Turismo",
+      "imagen": "https://picsum.photos/400/200?random=2",
+      "descripcion": "Descubre destinos responsables.",
+      "contenido": "Lorem ipsum dolor sit amet...",
+      "fecha": "2026-08-08",
+      "autorEmail": "maria@mail.com",
+      "autorNombre": "María González"
+    },
+    {
+      "id": 3,
+      "titulo": "Tecnología 2026",
+      "categoria": "Tecnología",
+      "imagen": "https://picsum.photos/400/200?random=3",
+      "descripcion": "Avances que marcarán el año.",
+      "contenido": "Lorem ipsum dolor sit amet...",
+      "fecha": "2026-08-05",
+      "autorEmail": "carlos@mail.com",
+      "autorNombre": "Carlos Ruiz"
+    }
+  ]
+}
