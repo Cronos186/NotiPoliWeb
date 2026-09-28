@@ -801,3 +801,196 @@
     display: none;
   }
 }
+
+/* ==================== CRUD: LAYOUT ==================== */
+.crud {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 32px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* ==================== FORMULARIO CRUD ==================== */
+.crud__form-container {
+  background: #FFFFFF;
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.06);
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+}
+
+.crud__form-title {
+  font-size: 20px;
+  color: #1E3A8A;
+  margin-bottom: 24px;
+  font-weight: 700;
+}
+
+.crud__form-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.btn--outline-dark {
+  background: transparent;
+  border: 2px solid #374151;
+  color: #374151;
+}
+
+.btn--outline-dark:hover {
+  background: #374151;
+  color: #FFFFFF;
+}
+
+.crud__aviso {
+  font-size: 12.5px;
+  color: #6B7280;
+  margin-top: 16px;
+  font-style: italic;
+}
+
+/* ==================== LISTADO DE NOTICIAS ==================== */
+.crud__list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.crud__list-title {
+  font-size: 18px;
+  color: #1E3A8A;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.crud__list-title--otros {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 2px dashed #D1D5DB;
+}
+
+.crud__count {
+  font-size: 14px;
+  color: #6B7280;
+  font-weight: 500;
+}
+
+.crud__nota {
+  font-size: 12.5px;
+  color: #6B7280;
+  font-style: italic;
+  margin-top: -12px;
+}
+
+.crud__empty {
+  background: #FFFFFF;
+  padding: 24px;
+  border-radius: 10px;
+  text-align: center;
+  color: #6B7280;
+  font-style: italic;
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+
+/* ==================== TABLA ==================== */
+.crud__table-wrapper {
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.06);
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+.crud__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 700px;
+}
+
+.crud__table thead {
+  background: #F3F4F6;
+  border-bottom: 2px solid #E5E7EB;
+}
+
+.crud__table th {
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 700;
+  color: #111827;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: .3px;
+}
+
+.crud__table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #F3F4F6;
+  vertical-align: middle;
+  color: #374151;
+}
+
+.crud__table tbody tr:hover {
+  background: #F9FAFB;
+}
+
+.crud__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.crud__thumb {
+  width: 60px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 6px;
+  background: #E5E7EB;
+}
+
+.crud__td-titulo {
+  font-weight: 600;
+  color: #111827;
+  max-width: 220px;
+}
+
+.crud__td-empty {
+  text-align: center;
+  color: #9CA3AF;
+  font-style: italic;
+  padding: 32px 16px !important;
+}
+
+/* ==================== BOTÓN BLOQUEADO ==================== */
+.btn--locked {
+  background: #F3F4F6;
+  border: 2px dashed #D1D5DB;
+  color: #9CA3AF;
+  cursor: not-allowed;
+}
+
+/* ==================== INFO AUTORÍA ==================== */
+.crud__info {
+  background: #EFF6FF;
+  border-left: 4px solid #3B82F6;
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #1E3A8A;
+  line-height: 1.6;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1100px) {
+  .crud {
+    grid-template-columns: 1fr;
+  }
+  .crud__form-container {
+    position: static;
+  }
+}

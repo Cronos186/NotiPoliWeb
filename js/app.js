@@ -1,15 +1,19 @@
 /* ============================================================
    NotiPoliWeb — app.js
-   Funciones globales: header, dropdown, sesión, utilidades
+   Funciones globales: sesión, dropdown, semillas, utilidades
    ============================================================ */
 
+/* ==================== CONSTANTES ==================== */
 const STORAGE_KEYS = {
   USUARIOS: 'notipoliweb_usuarios',
   SESION: 'notipoliweb_sesion',
-  FAVORITOS: (email) => `notipoliweb_favoritos_${email}`
+  FAVORITOS: (email) => `notipoliweb_favoritos_${email}`,
+  NOTICIAS_CREADAS: 'notipoliweb_noticias_creadas',
+  ELIMINADAS: 'notipoliweb_eliminadas',
+  MENSAJES: 'notipoliweb_mensajes'
 };
 
-/* ---------- SESIÓN ---------- */
+/* ==================== SESIÓN ==================== */
 function getSesion() {
   const raw = localStorage.getItem(STORAGE_KEYS.SESION);
   return raw ? JSON.parse(raw) : null;
@@ -24,13 +28,17 @@ function cerrarSesion() {
   window.location.href = getBasePath() + 'index.html';
 }
 
-/* ---------- UTILIDADES ---------- */
+/* ==================== UTILIDADES ==================== */
 function getBasePath() {
   // Detecta si estamos en /pages/ para ajustar rutas relativas
   return window.location.pathname.includes('/pages/') ? '../' : './';
 }
 
-/* ---------- DROPDOWN MI CUENTA ---------- */
+function capitalizar(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/* ==================== DROPDOWN MI CUENTA ==================== */
 function renderAccountMenu() {
   const menu = document.getElementById('accountMenu');
   const label = document.getElementById('accountLabel');
@@ -58,7 +66,6 @@ function renderAccountMenu() {
   }
 }
 
-/* ---------- TOGGLE DEL DROPDOWN ---------- */
 function initAccountDropdown() {
   const btn = document.getElementById('accountBtn');
   const menu = document.getElementById('accountMenu');
@@ -74,8 +81,75 @@ function initAccountDropdown() {
   });
 }
 
-/* ---------- INICIALIZACIÓN ---------- */
-document.addEventListener('DOMContentLoaded', () => {
+/* ============================================================
+   CARGA DE SEMILLAS (usuarios, favoritos, noticias creadas)
+   ============================================================ */
+
+/* ---------- USUARIOS ---------- */
+async function cargarUsuariosSemilla() {
+  // Si ya hay usuarios en localStorage, no sobreescribir
+  const existentes = localStorage.getItem(STORAGE_KEYS.USUARIOS);
+  if (existentes && JSON.parse(existentes).length > 0) return;
+
+  try {
+    const base = getBasePath();
+    const res = await fetch(base + 'data/usuarios.json');
+    const data = await res.json();
+    localStorage.setItem(STORAGE_KEYS.USUARIOS, JSON.stringify(data.usuarios));
+    console.log('✅ Usuarios semilla cargados:', data.usuarios.length);
+  } catch (err) {
+    console.warn('⚠ No se pudieron cargar usuarios semilla:', err);
+  }
+}
+
+/* ---------- FAVORITOS ---------- */
+async function cargarFavoritosSemilla() {
+  try {
+    const base = getBasePath();
+    const res = await fetch(base + 'data/favoritos.json');
+    const data = await res.json();
+
+    // Para cada usuario, si no tiene favoritos en localStorage, los cargamos
+    data.favoritos.forEach(f => {
+      const clave = STORAGE_KEYS.FAVORITOS(f.email);
+      if (!localStorage.getItem(clave)) {
+        localStorage.setItem(clave, JSON.stringify(f.noticias));
+      }
+    });
+    console.log('✅ Favoritos semilla cargados');
+  } catch (err) {
+    console.warn('⚠ No se pudieron cargar favoritos semilla:', err);
+  }
+}
+
+/* ---------- NOTICIAS CREADAS ---------- */
+async function cargarNoticiasCreadasSemilla() {
+  const existentes = localStorage.getItem(STORAGE_KEYS.NOTICIAS_CREADAS);
+  if (existentes && JSON.parse(existentes).length > 0) return;
+
+  try {
+    const base = getBasePath();
+    const res = await fetch(base + 'data/noticias-creadas.json');
+    const data = await res.json();
+    localStorage.setItem(STORAGE_KEYS.NOTICIAS_CREADAS, JSON.stringify(data.noticias));
+    console.log('✅ Noticias creadas semilla cargadas:', data.noticias.length);
+  } catch (err) {
+    console.warn('⚠ No se pudieron cargar noticias creadas semilla:', err);
+  }
+}
+
+/* ---------- CARGA GLOBAL DE SEMILLAS ---------- */
+async function cargarSemillas() {
+  await Promise.all([
+    cargarUsuariosSemilla(),
+    cargarFavoritosSemilla(),
+    cargarNoticiasCreadasSemilla()
+  ]);
+}
+
+/* ==================== INICIALIZACIÓN ==================== */
+document.addEventListener('DOMContentLoaded', async () => {
+  await cargarSemillas();
   renderAccountMenu();
   initAccountDropdown();
 });

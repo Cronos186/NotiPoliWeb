@@ -1,0 +1,26 @@
+{
+  "noticias": [
+    {
+      "id": 101,
+      "titulo": "Mi experiencia en el aula digital",
+      "categoria": "Educación",
+      "imagen": "https://picsum.photos/400/200?random=101",
+      "descripcion": "Comparto cómo la tecnología transformó mi clase.",
+      "contenido": "Durante el último semestre implementé herramientas digitales en mi aula y los resultados fueron sorprendentes...",
+      "fecha": "2026-08-15",
+      "autorEmail": "juan@mail.com",
+      "autorNombre": "Juan Pérez"
+    },
+    {
+      "id": 102,
+      "titulo": "Ruta turística por el Eje Cafetero",
+      "categoria": "Turismo",
+      "imagen": "https://picsum.photos/400/200?random=102",
+      "descripcion": "Un recorrido por los mejores paisajes de la región.",
+      "contenido": "El Eje Cafetero ofrece paisajes únicos y una cultura vibrante...",
+      "fecha": "2026-08-12",
+      "autorEmail": "maria@mail.com",
+      "autorNombre": "María González"
+    }
+  ]
+}

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NotiPoliWeb — Gestionar Noticias</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body>
+
+  <!-- ==================== HEADER ==================== -->
+  <header class="header">
+    <div class="header__container">
+      <a href="../index.html" class="header__logo">📰 NotiPoliWeb</a>
+
+      <nav class="header__nav">
+        <a href="../index.html" class="header__link">Inicio</a>
+        <a href="noticias.html" class="header__link">Noticias</a>
+        <a href="favoritos.html" class="header__link">Favoritos</a>
+        <a href="contacto.html" class="header__link">Contacto</a>
+        <a href="acerca-de.html" class="header__link">Acerca de</a>
+      </nav>
+
+      <div class="header__account" id="accountDropdown">
+        <button class="header__account-btn" id="accountBtn">
+          👤 <span id="accountLabel">Mi cuenta</span> ▼
+        </button>
+        <div class="header__account-menu" id="accountMenu"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== TÍTULO ==================== -->
+  <section class="section">
+    <h1 class="section__title">Gestionar Noticias</h1>
+    <p class="section__subtitle">
+      Crea nuevas noticias y administra las que tú mismo has publicado.
+    </p>
+  </section>
+
+  <!-- ==================== BLOQUE PRINCIPAL ==================== -->
+  <section class="section section--gray">
+    <div class="crud">
+
+      <!-- ==================== FORMULARIO DE CREACIÓN ==================== -->
+      <div class="crud__form-container">
+        <h2 class="crud__form-title">➕ Crear Nueva Noticia</h2>
+        <div class="alert alert--success" id="crudSuccess" style="display:none;"></div>
+        <div class="alert alert--error" id="crudError" style="display:none;"></div>
+
+        <form class="crud__form" id="crudForm" novalidate>
+
+          <div class="form__group">
+            <label for="titulo" class="form__label">Título *</label>
+            <input type="text" id="titulo" name="titulo" class="form__input"
+                   placeholder="Ingresa el título de la noticia">
+            <span class="form__error" id="errorTitulo"></span>
+          </div>
+
+          <div class="form__group">
+            <label for="categoria" class="form__label">Categoría *</label>
+            <select id="categoria" name="categoria" class="form__input">
+              <option value="">Selecciona una categoría</option>
+              <option value="Educación">Educación</option>
+              <option value="Tecnología">Tecnología</option>
+              <option value="Turismo">Turismo</option>
+              <option value="Comercial">Comercial</option>
+            </select>
+            <span class="form__error" id="errorCategoria"></span>
+          </div>
+
+          <div class="form__group">
+            <label for="imagen" class="form__label">Imagen (URL) *</label>
+            <input type="url" id="imagen" name="imagen" class="form__input"
+                   placeholder="https://...">
+            <span class="form__error" id="errorImagen"></span>
+          </div>
+
+          <div class="form__group">
+            <label for="descripcion" class="form__label">Descripción breve *</label>
+            <input type="text" id="descripcion" name="descripcion" class="form__input"
+                   placeholder="Resumen corto (máx. 150 caracteres)" maxlength="150">
+            <span class="form__error" id="errorDescripcion"></span>
+          </div>
+
+          <div class="form__group">
+            <label for="contenido" class="form__label">Contenido completo *</label>
+            <textarea id="contenido" name="contenido" class="form__input form__textarea"
+                      placeholder="Escribe el contenido de la noticia..." rows="6"></textarea>
+            <span class="form__error" id="errorContenido"></span>
+          </div>
+
+          <div class="crud__form-actions">
+            <button type="submit" class="btn btn--primary" id="btnPublicar">
+              Publicar Noticia
+            </button>
+            <button type="button" class="btn btn--outline-dark" id="btnLimpiar">
+              Limpiar formulario
+            </button>
+          </div>
+
+          <p class="crud__aviso">
+            ℹ Esta noticia quedará registrada a tu nombre (<span id="autorNombre"></span>).
+          </p>
+        </form>
+      </div>
+
+      <!-- ==================== LISTADO DE MIS NOTICIAS ==================== -->
+      <div class="crud__list-container">
+        <h2 class="crud__list-title">
+          📄 Mis Noticias Publicadas
+          <span class="crud__count" id="misNoticiasCount">(0)</span>
+        </h2>
+
+        <div class="crud__table-wrapper">
+          <table class="crud__table">
+            <thead>
+              <tr>
+                <th>Imagen</th>
+                <th>Título</th>
+                <th>Categoría</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="misNoticiasBody">
+              <!-- Render dinámico desde crud.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <p class="crud__empty" id="misNoticiasEmpty" style="display:none;">
+          Aún no has publicado ninguna noticia. ¡Crea la primera!
+        </p>
+
+        <!-- ==================== OTRAS NOTICIAS ==================== -->
+        <h2 class="crud__list-title crud__list-title--otros">
+          📰 Otras Noticias de la Comunidad
+        </h2>
+        <p class="crud__nota">
+          (No puedes eliminarlas porque fueron creadas por otros usuarios)
+        </p>
+
+        <div class="crud__table-wrapper">
+          <table class="crud__table">
+            <thead>
+              <tr>
+                <th>Imagen</th>
+                <th>Título</th>
+                <th>Categoría</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="otrosNoticiasBody">
+              <!-- Render dinámico desde crud.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="crud__info">
+          ℹ <strong>Regla de autoría:</strong> solo puedes eliminar las noticias que tú mismo has creado.
+          Las noticias de otros usuarios aparecen con el botón "Bloqueado".
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__col">
+        <p>© 2026 NotiPoliWeb. Todos los derechos reservados.</p>
+      </div>
+      <div class="footer__col">
+        <p>contacto@notipoliweb.com</p>
+      </div>
+      <div class="footer__col">
+        <a href="#">Facebook</a>
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/app.js"></script>
+  <script src="../js/noticias.js"></script>
+  <script src="../js/crud.js"></script>
+</body>
+</html>
