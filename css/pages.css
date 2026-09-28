@@ -1,0 +1,64 @@
+/* ==================== FILTROS ==================== */
+.filters {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.filter {
+  padding: 10px 20px;
+  border: 2px solid #1E3A8A;
+  background: transparent;
+  color: #1E3A8A;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+}
+
+.filter:hover {
+  background: #1E3A8A;
+  color: #FFFFFF;
+}
+
+.filter--active {
+  background: #1E3A8A;
+  color: #FFFFFF;
+}
+
+/* ==================== GRID DE 4 COLUMNAS ==================== */
+.cards--grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1200px) {
+  .cards--grid-4 { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .cards--grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .cards--grid-4 { grid-template-columns: 1fr; }
+}
+
+/* ==================== SUBTÍTULO ==================== */
+.section__subtitle {
+  font-size: 16px;
+  color: #6B7280;
+  margin-bottom: 24px;
+  margin-top: -16px;
+}
+
+/* ==================== EMPTY STATE ==================== */
+.empty-state {
+  text-align: center;
+  color: #9CA3AF;
+  font-style: italic;
+  padding: 40px 0;
+}

@@ -6,7 +6,7 @@
       "categoria": "Educación",
       "imagen": "https://picsum.photos/400/200?random=1",
       "descripcion": "Nuevas metodologías transforman el aula.",
-      "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "fecha": "2026-08-10",
       "autorEmail": "juan@mail.com",
       "autorNombre": "Juan Pérez"
@@ -32,6 +32,61 @@
       "fecha": "2026-08-05",
       "autorEmail": "carlos@mail.com",
       "autorNombre": "Carlos Ruiz"
+    },
+    {
+      "id": 4,
+      "titulo": "Comercio Local",
+      "categoria": "Comercial",
+      "imagen": "https://picsum.photos/400/200?random=4",
+      "descripcion": "Emprendimientos que crecen en la región.",
+      "contenido": "Lorem ipsum dolor sit amet...",
+      "fecha": "2026-08-03",
+      "autorEmail": "ana@mail.com",
+      "autorNombre": "Ana Torres"
+    },
+    {
+      "id": 5,
+      "titulo": "Aulas Digitales",
+      "categoria": "Educación",
+      "imagen": "https://picsum.photos/400/200?random=5",
+      "descripcion": "La tecnología llega a las escuelas rurales.",
+      "contenido": "Lorem ipsum dolor sit amet...",
+      "fecha": "2026-08-01",
+      "autorEmail": "juan@mail.com",
+      "autorNombre": "Juan Pérez"
+    },
+    {
+      "id": 6,
+      "titulo": "Rutas Ecoturísticas",
+      "categoria": "Turismo",
+      "imagen": "https://picsum.photos/400/200?random=6",
+      "descripcion": "Nuevos senderos para los amantes de la naturaleza.",
+      "contenido": "Lorem ipsum dolor sit amet...",
+      "fecha": "2026-07-28",
+      "autorEmail": "maria@mail.com",
+      "autorNombre": "María González"
+    },
+    {
+      "id": 7,
+      "titulo": "Inteligencia Artificial",
+      "categoria": "Tecnología",
+      "imagen": "https://picsum.photos/400/200?random=7",
+      "descripcion": "Cómo la IA transforma la vida cotidiana.",
+      "contenido": "Lorem ipsum dolor sit amet...",
+      "fecha": "2026-07-25",
+      "autorEmail": "carlos@mail.com",
+      "autorNombre": "Carlos Ruiz"
+    },
+    {
+      "id": 8,
+      "titulo": "Ferias Comerciales",
+      "categoria": "Comercial",
+      "imagen": "https://picsum.photos/400/200?random=8",
+      "descripcion": "Calendario de ferias para el segundo semestre.",
+      "contenido": "Lorem ipsum dolor sit amet...",
+      "fecha": "2026-07-20",
+      "autorEmail": "ana@mail.com",
+      "autorNombre": "Ana Torres"
     }
   ]
 }
