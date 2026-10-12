@@ -1,6 +1,5 @@
 # Dependencias
 node_modules/
-package-lock.json
 
 # Archivos generados o de prueba
 *.tmp
@@ -8,6 +7,11 @@ package-lock.json
 .cache/
 .env
 .env.local
+
+# Build de Vite
+dist/
+dist-ssr/
+coverage/
 
 # Navegadores (caché y temp)
 .DS_Store
