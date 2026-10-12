@@ -1,0 +1,19 @@
+# Dependencias
+node_modules/
+
+# Archivos generados o de prueba
+*.tmp
+*.temp
+.cache/
+.env
+.env.local
+
+# Build de Vite
+dist/
+dist-ssr/
+coverage/
+
+# Navegadores (caché y temp)
+.DS_Store
+Thumbs.db
+desktop.ini
