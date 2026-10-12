@@ -19,6 +19,7 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: false,
   },
+  base: '/NotiPoliWeb/',
   test: {
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],
