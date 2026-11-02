@@ -22,12 +22,46 @@ Aplicación web tipo periódico digital desarrollada como proyecto del módulo *
 
 ## 🚀 Puesta en marcha
 
+### Opción A: Desarrollo local con Node.js
+
 Requisitos: **Node.js 22.12 o superior** (recomendado Node 24 LTS).
 
 ```bash
 npm install       # instala las dependencias
 npm run dev       # servidor de desarrollo en http://localhost:5173
 ```
+
+### Opción B: Despliegue con Docker (recomendado para producción)
+
+Requisitos: **Docker** y **Docker Compose** instalados.
+
+**Con Docker Compose (recomendado):**
+```bash
+docker-compose up -d --build
+# La app estará disponible en http://localhost:8080
+```
+
+**Solo Docker:**
+```bash
+docker build -t notipoliweb .
+docker run -d -p 8080:80 --name notipoliweb notipoliweb
+# La app estará disponible en http://localhost:8080
+```
+
+**Parar y eliminar el contenedor:**
+```bash
+docker-compose down
+# o
+docker stop notipoliweb && docker rm notipoliweb
+```
+
+### Variables de entorno opcionales
+
+| Variable | Valor por defecto | Descripción |
+|----------|-------------------|-------------|
+| `PORT` | `80` | Puerto interno del contenedor (nginx) |
+
+> **Nota:** La imagen usa un build multi-stage (Node 20 Alpine → Nginx Alpine) para generar una imagen ligera de producción (~25 MB).
 
 Otros comandos disponibles:
 
@@ -64,6 +98,7 @@ Los datos semilla se cargan automáticamente la primera vez que se abre la aplic
 | **React Router 7** | Enrutado de la SPA (`/noticias`, `/favoritos`, …) |
 | **Vite 8** | Servidor de desarrollo y empaquetado |
 | **Vitest + Testing Library** | Pruebas de humo de las vistas principales |
+| **Docker / Nginx** | Contenerización y servidor web de producción |
 | **Context API** | Estado global de sesión, noticias y notificaciones |
 | **localStorage** | Persistencia de datos en el navegador |
 | **JSON** | Datos semilla (noticias, usuarios, favoritos) |
@@ -135,11 +170,9 @@ notipoliweb/
 │       ├── GestionarNoticiasPage.tsx
 │       └── NotFoundPage.tsx
 ├── mockups/                       # Wireframes de la Entrega 1
-└── legacy/                        # Entrega 2 (HTML + CSS + JS vanilla)
-    ├── index.html
-    ├── pages/                     # Vistas HTML internas
-    ├── css/ · js/ · data/         # Estilos, lógica y JSON semilla originales
-    └── favicon.ico
+	├── Dockerfile                     # Construcción multi-stage de Docker
+	├── docker-compose.yml             # Orquestación de contenedores
+	└── nginx.conf                     # Configuración de Nginx para SPA (React Router)
 ```
 
 ---
