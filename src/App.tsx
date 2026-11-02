@@ -29,7 +29,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
 
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <NotificacionProvider>
           <AuthProvider>
             <NoticiasProvider>
@@ -70,3 +70,4 @@ export default function App() {
     </ThemeProvider>
   );
 }
+
