@@ -17,3 +17,6 @@ coverage/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+bd-posgress/data/*
+*.log

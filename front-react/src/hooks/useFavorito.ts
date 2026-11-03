@@ -1,8 +1,8 @@
-import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext';
-import { useNoticias } from '@/context/NoticiasContext';
-import { useNotificacion } from '@/context/NotificacionContext';
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import { useNoticias } from "@/context/NoticiasContext";
+import { useNotificacion } from "@/context/NotificacionContext";
 
 /* ============================================================
    NotiPoliWeb — Hook de favoritos
@@ -12,7 +12,7 @@ import { useNotificacion } from '@/context/NotificacionContext';
 
 interface UseFavoritoResult {
   esFavorito: (id: number) => boolean;
-  alternar: (id: number, rutaRetorno?: string) => void;
+  alternar: (id: number, rutaRetorno?: string) => Promise<void>;
 }
 
 export function useFavorito(): UseFavoritoResult {
@@ -22,19 +22,19 @@ export function useFavorito(): UseFavoritoResult {
   const navigate = useNavigate();
 
   const alternar = useCallback(
-    (id: number, rutaRetorno?: string) => {
+    async (id: number, rutaRetorno?: string) => {
       if (!sesion) {
-        mostrar('Debes iniciar sesión para guardar favoritos.', 'warning');
-        navigate('/login', {
-          state: { desde: rutaRetorno ?? '/noticias', motivo: 'favoritos' },
+        mostrar("Debes iniciar sesión para guardar favoritos.", "warning");
+        navigate("/login", {
+          state: { desde: rutaRetorno ?? "/noticias", motivo: "favoritos" },
         });
         return;
       }
 
-      const agregado = alternarFavorito(id);
+      const agregado = await alternarFavorito(id);
       mostrar(
-        agregado ? 'Noticia añadida a tus favoritos.' : 'Noticia quitada de tus favoritos.',
-        agregado ? 'success' : 'info',
+        agregado ? "Noticia añadida a tus favoritos." : "Noticia quitada de tus favoritos.",
+        agregado ? "success" : "info",
       );
     },
     [sesion, alternarFavorito, mostrar, navigate],
@@ -42,3 +42,4 @@ export function useFavorito(): UseFavoritoResult {
 
   return { esFavorito, alternar };
 }
+

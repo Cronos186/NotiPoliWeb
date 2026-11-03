@@ -1,0 +1,17 @@
+services:
+  front-react:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: notipoli-front
+    ports:
+      - "8080:80"
+    environment:
+      REACT_APP_API_URL: http://localhost:3000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
