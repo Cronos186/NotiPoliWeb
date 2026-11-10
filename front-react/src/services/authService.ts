@@ -19,7 +19,9 @@ export async function getUsuarios(): Promise<Usuario[]> {
 export async function buscarUsuario(email: string): Promise<Usuario | undefined> {
   const response = await fetch(`${API_URL}/usuarios/${encodeURIComponent(email.trim().toLowerCase())}`);
   if (!response.ok) return undefined;
-  return response.json();
+  const text = await response.text();
+  if (!text) return undefined;
+  return JSON.parse(text);
 }
 
 export async function validarCorreoUnico(valor: string): Promise<string> {

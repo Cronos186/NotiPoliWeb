@@ -18,5 +18,6 @@ coverage/
 Thumbs.db
 desktop.ini
 
-bd-posgress/data/*
+bd-postgres/data/
 *.log
+back-nest/tsconfig.tsbuildinfo

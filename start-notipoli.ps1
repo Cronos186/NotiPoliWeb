@@ -17,14 +17,14 @@ if (Test-Path $logFile) {
 }
 
 Write-Host '=== Levantando notipoli-db ===' -ForegroundColor Cyan
-Push-Location "$root\bd-posgress"
+Push-Location "$root\bd-postgres"
 docker compose up -d
 Write-Host 'Esperando Postgres...' -ForegroundColor Yellow
 Start-Sleep -Seconds 5
 $retry = 0
 do {
   try {
-    docker exec notipoli-db pg_isready -U user -d graphify | Out-Null
+    docker exec notipoli-db pg_isready -U user -d notipolibd | Out-Null
     $ready = $true
   } catch { $ready = $false }
   if (-not $ready) {

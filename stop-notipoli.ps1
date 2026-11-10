@@ -16,7 +16,7 @@ docker compose down
 Pop-Location
 
 Write-Host '=== Deteniendo notipoli-db ===' -ForegroundColor Cyan
-Push-Location "$root\bd-posgress"
+Push-Location "$root\bd-postgres"
 docker compose down
 Pop-Location
 

@@ -246,8 +246,8 @@ function FormularioRegistro({
   const [apellido, setApellido] = useState("");
   const [correo, setCorreo] = useState("");
   const [password, setPassword] = useState("");
-  const [password2] = useState("");
-  const [terminos] = useState(false);
+  const [password2, setPassword2] = useState("");
+  const [terminos, setTerminos] = useState(false);
   const [verPassword, setVerPassword] = useState(false);
   
   const [recordarme, setRecordarme] = useState(false);
@@ -266,6 +266,7 @@ function FormularioRegistro({
   const handleSubmit = async (evento: FormEvent<HTMLFormElement>) => {
     evento.preventDefault();
     setErrorGlobal("");
+    console.log("Formulario submit - Datos:", { nombre, apellido, correo, password, password2, terminos });
     const valCorreo = await validarCorreoUnico(correo);
     const nuevosErrores: ErroresRegistro = {
       nombre: validarNombre(nombre),
@@ -275,14 +276,17 @@ function FormularioRegistro({
       password2: validarConfirmacionPassword(password2, password),
       terminos: validarTerminos(terminos),
     };
+    console.log("Errores de validación:", nuevosErrores);
     setErrores(nuevosErrores);
     if (Object.values(nuevosErrores).some(Boolean)) {
       mostrar("Revisa los campos marcados en rojo.", "error");
       return;
     }
     setEnviando(true);
+    console.log("Iniciando registro con:", { nombre, apellido, correo, password, password2, terminos });
     window.setTimeout(() => {
       registro({ nombre, apellido, correo, password, password2, terminos }).then((resultado) => {
+        console.log("Resultado del registro:", resultado);
         setEnviando(false);
         if (!resultado.ok) {
           setErrorGlobal(resultado.error ?? "No se pudo crear la cuenta.");
@@ -359,6 +363,31 @@ function FormularioRegistro({
               },
             }}
           />
+          <TextField
+            id="password2"
+            label="Confirmar contraseña"
+            type={verPassword ? "text" : "password"}
+            required
+            value={password2}
+            onChange={(e) => {
+              setPassword2(e.target.value);
+              setErrores((previos) => ({ ...previos, password2: undefined }));
+            }}
+            error={Boolean(errores.password2)}
+            helperText={errores.password2 ?? " "}
+            placeholder="Repite tu contraseña"
+            autoComplete="current-password"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={terminos}
+                onChange={(e) => setTerminos(e.target.checked)}
+                size="small"
+              />
+            }
+            label={<Typography variant="body2">Acepto los términos y condiciones</Typography>}
+          />
           <Stack
             direction="row"
             sx={{ justifyContent: "space-between", alignItems: "center", flexWrap: "wrap" }}
@@ -390,9 +419,9 @@ function FormularioRegistro({
         </Stack>
       </Box>
       <Typography variant="body2" sx={{ mt: 3, textAlign: "center" }}>
-        ¿No tienes cuenta?{" "}
+        ¿Ya tienes cuenta?{" "}
         <Link component="button" type="button" onClick={alCambiarALogin} sx={{ color: "primary.main", fontWeight: 600, verticalAlign: "baseline" }}>
-          Regístrate aquí
+          ¿Iniciar sesión?
         </Link>
       </Typography>
     </>
