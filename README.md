@@ -2,8 +2,7 @@
 
 Aplicación web tipo periódico digital desarrollada como proyecto del módulo **Desarrollo de Front-end**. Permite a los usuarios explorar noticias, guardar favoritos, publicar sus propias experiencias y gestionar su cuenta.
 
-> **Entrega 3 — Migración a React + TypeScript + Material UI + Arquitectura de 3 servicios Docker.**
-> La versión original en HTML, CSS y JavaScript vanilla se conserva intacta en [`legacy/`](legacy/) como referencia.
+> **Arquitectura de 3 servicios Docker.**
 
 ---
 
