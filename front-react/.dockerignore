@@ -1,0 +1,18 @@
+# Ignorar archivos no necesarios para build de front-react
+node_modules/
+dist/
+dist-ssr/
+coverage/
+*.log
+.env
+.env.*
+.git
+.gitignore
+docker-compose.yml
+Dockerfile
+*.md
+*.txt
+*.local
+.vite/
+*.spec.ts
+*.spec.tsx

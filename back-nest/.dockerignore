@@ -1,0 +1,16 @@
+# Ignorar archivos no necesarios para build de back-nest
+node_modules/
+dist/
+*.log
+.env
+.env.*
+.git
+.gitignore
+docker-compose.yml
+Dockerfile
+*.md
+*.txt
+coverage/
+.nyc_output/
+tsconfig.tsbuildinfo
+*.spec.ts

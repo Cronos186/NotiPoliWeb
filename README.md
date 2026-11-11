@@ -51,31 +51,35 @@ La aplicación se ha separado en **3 servicios independientes** contenerizados c
 
 ---
 
-### Opción A: Con Docker Compose (Recomendado - 3 contenedores)
+### Opción A: Con Docker Compose Unificado (Recomendado - 1 comando)
 
-Desde la raíz del proyecto:
+Desde la raíz del proyecto (donde está `docker-compose.yml` y `.env`):
 
 ```bash
-# 1. Levantar base de datos (esperar a que esté lista)
-docker-compose -f bd-postgres/docker-compose.yml up -d
+# 1. Crear .env desde plantilla (primera vez)
+cp .env.example .env
 
-# 2. Levantar backend (esperar ~5 seg a que conecte a BD)
-docker-compose -f back-nest/docker-compose.yml up -d
-
-# 3. Levantar frontend
-docker-compose -f front-react/docker-compose.yml up -d
+# 2. Levantar los 3 servicios con healthchecks y red compartida
+docker compose up -d
 ```
 
 **Verificar que todo está corriendo:**
 ```bash
 docker ps
 # Deberías ver 3 contenedores: notipoli-db, notipoli-back, notipoli-front
+
+# Ver estado de salud
+docker compose ps
 ```
 
 **URLs de acceso:**
 - 🌐 **Frontend:** http://localhost:8080
 - 🔧 **Backend API:** http://localhost:3000
 - 🗄️ **Base de datos:** localhost:5432 (user/password, db: notipolibd)
+
+> **Comunicación interna:** Los servicios se hablan por **nombre de servicio** en la red `notipoli-net`:
+> - `front-react` → `back-nest:3000` (via `REACT_APP_API_URL=http://back-nest:3000`)
+> - `back-nest` → `db:5432` (via `DB_HOST=db`)
 
 ---
 
@@ -115,22 +119,33 @@ npm run dev           # http://localhost:5173 (proxy a backend en 3000)
 ### Parar y limpiar
 
 ```bash
-# Parar todos los servicios
-docker-compose -f front-react/docker-compose.yml down
-docker-compose -f back-nest/docker-compose.yml down
-docker-compose -f bd-postgres/docker-compose.yml down
+# Parar todos los servicios (compose unificado)
+docker compose down
 
 # Limpiar volúmenes (⚠️ borra datos de la BD)
-docker-compose -f bd-postgres/docker-compose.yml down -v
+docker compose down -v
+
+# Opción legacy: parar compose individuales
+# docker-compose -f front-react/docker-compose.yml down
+# docker-compose -f back-nest/docker-compose.yml down
+# docker-compose -f bd-postgres/docker-compose.yml down
 ```
 
 ---
 
 ## ⚙️ Variables de entorno
 
-### back-nest/.env
+### Archivo `.env` en la raíz (para `docker-compose.yml` unificado)
 ```env
-DB_HOST=host.docker.internal   # o 'localhost' en desarrollo local
+# Copia desde .env.example y ajusta si necesario
+DB_USER=user
+DB_PASS=password
+DB_NAME=notipolibd
+```
+
+### back-nest/.env (para desarrollo local sin Docker)
+```env
+DB_HOST=localhost          # En Docker compose unificado usa 'db'
 DB_PORT=5432
 DB_USER=user
 DB_PASS=password
@@ -138,19 +153,20 @@ DB_NAME=notipolibd
 PORT=3000
 ```
 
-### front-react (docker-compose.yml)
-```yaml
-environment:
-  REACT_APP_API_URL: http://localhost:3000
+### front-react/.env (para desarrollo local con Vite)
+```env
+REACT_APP_API_URL=http://localhost:3000   # En Docker compose unificado: http://back-nest:3000
 ```
 
-### bd-postgres (docker-compose.yml)
+### bd-postgres (docker-compose.yml individual)
 ```yaml
 environment:
   POSTGRES_USER: user
   POSTGRES_PASSWORD: password
   POSTGRES_DB: notipolibd
 ```
+
+> **Nota:** Cada servicio tiene su `.env.example` con valores de plantilla. Copia a `.env` y ajusta.
 
 ---
 
@@ -232,12 +248,13 @@ notipoli-web/
 flowchart LR
     A[Browser] -->|HTTP :8080| B[Nginx\nfront-react]
     B -->|API calls\nREACT_APP_API_URL| C[NestJS\nback-nest:3000]
-    C -->|TypeORM\nDB_HOST=host.docker.internal| D[(PostgreSQL\nbd-postgres:5432)]
+    C -->|TypeORM\nDB_HOST=db| D[(PostgreSQL\ndb:5432)]
 ```
 
-- **Frontend → Backend:** `fetch()` a `http://localhost:3000/...` (configurado en `REACT_APP_API_URL`)
-- **Backend → BD:** TypeORM conecta a `host.docker.internal:5432` (Docker Desktop) o `localhost:5432` (local)
+- **Frontend → Backend:** `fetch()` a `http://back-nest:3000/...` (configurado en `REACT_APP_API_URL=http://back-nest:3000`)
+- **Backend → BD:** TypeORM conecta a `db:5432` (nombre de servicio en red `notipoli-net`)
 - **CORS:** Backend configurado para permitir `http://localhost:8080`
+- **Red Docker:** Todos los servicios comparten la red `notipoli-net` (bridge)
 
 ---
 

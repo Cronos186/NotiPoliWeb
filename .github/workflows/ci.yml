@@ -1,0 +1,227 @@
+name: CI Pipeline - NotiPoliWeb
+
+on:
+  push:
+    branches: [ main, arquitectura-3-contenedores ]
+  pull_request:
+    branches: [ main, arquitectura-3-contenedores ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  COMPOSE_PROJECT_NAME: notipoli-web
+
+jobs:
+  # Job 1: Validación de sintaxis y linting
+  validate:
+    name: Validar configuración
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repositorio
+        uses: actions/checkout@v4
+
+      - name: Verificar docker-compose.yml sintaxis
+        run: docker compose -f docker-compose.yml config --quiet
+
+      - name: Verificar .env.example existe
+        run: test -f .env.example && echo "✅ .env.example existe" || (echo "❌ Falta .env.example" && exit 1)
+
+      - name: Verificar .dockerignore en cada servicio
+        run: |
+          for dir in bd-postgres back-nest front-react; do
+            test -f "$dir/.dockerignore" && echo "✅ $dir/.dockerignore" || (echo "❌ Falta $dir/.dockerignore" && exit 1)
+          done
+
+      - name: Verificar .dockerignore en raíz
+        run: test -f .dockerignore && echo "✅ .dockerignore raíz" || (echo "❌ Falta .dockerignore en raíz" && exit 1)
+
+  # Job 2: Build de imágenes Docker
+  build:
+    name: Build imágenes Docker
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - name: Checkout repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build imagen bd-postgres (solo pull base image)
+        run: docker pull postgres:15
+
+      - name: Build imagen back-nest
+        uses: docker/build-push-action@v5
+        with:
+          context: ./back-nest
+          push: false
+          tags: notipoli-back:test
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build imagen front-react
+        uses: docker/build-push-action@v5
+        with:
+          context: ./front-react
+          push: false
+          tags: notipoli-front:test
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # Job 3: Test de integración - Levantar stack completo
+  integration-test:
+    name: Test integración (docker compose up)
+    runs-on: ubuntu-latest
+    needs: build
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repositorio
+        uses: actions/checkout@v4
+
+      - name: Crear .env desde .env.example
+        run: cp .env.example .env
+
+      - name: Levantar stack completo
+        run: |
+          docker compose up -d
+          echo "Esperando a que los servicios estén healthy..."
+          sleep 30
+
+      - name: Verificar contenedores corriendo
+        run: |
+          docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+          docker compose ps
+
+      - name: Healthcheck - Base de datos
+        run: |
+          for i in {1..10}; do
+            if docker exec notipoli-db pg_isready -U user -d notipolibd; then
+              echo "✅ Base de datos lista"
+              exit 0
+            fi
+            echo "Esperando BD... ($i/10)"
+            sleep 3
+          done
+          echo "❌ Base de datos no respondió"
+          exit 1
+
+      - name: Healthcheck - Backend API (endpoint /usuarios)
+        run: |
+          for i in {1..10}; do
+            if curl -f -s http://localhost:3000/usuarios > /dev/null; then
+              echo "✅ Backend API responde en /usuarios"
+              exit 0
+            fi
+            echo "Esperando Backend... ($i/10)"
+            sleep 3
+          done
+          echo "❌ Backend no respondió"
+          docker logs notipoli-back --tail 50
+          exit 1
+
+      - name: Healthcheck - Frontend (puerto 80 interno)
+        run: |
+          for i in {1..10}; do
+            if curl -f -s http://localhost:8080/ > /dev/null; then
+              echo "✅ Frontend responde en puerto 8080"
+              exit 0
+            fi
+            echo "Esperando Frontend... ($i/10)"
+            sleep 3
+          done
+          echo "❌ Frontend no respondió"
+          docker logs notipoli-front --tail 50
+          exit 1
+
+      - name: Test comunicación Frontend → Backend (ida - nombre de servicio)
+        run: |
+          echo "Probando comunicación frontend → backend via nombre de servicio..."
+          RESPONSE=$(docker exec notipoli-front wget -q -O - http://back-nest:3000/usuarios 2>&1 || true)
+          if [ $? -eq 0 ] && echo "$RESPONSE" | grep -q "\["; then
+            echo "✅ Frontend → Backend: OK (usando nombre de servicio 'back-nest:3000')"
+            echo "Respuesta: $(echo "$RESPONSE" | head -c 100)..."
+          else
+            echo "❌ Frontend → Backend: FALLÓ"
+            echo "Respuesta: $RESPONSE"
+            exit 1
+          fi
+
+      - name: Test comunicación Backend → BD (vuelta - nombre de servicio)
+        run: |
+          echo "Probando comunicación backend → base de datos via nombre de servicio..."
+          # Verificar conectividad de red al puerto 5432
+          if docker exec notipoli-back sh -c 'timeout 2 bash -c "cat < /dev/null > /dev/tcp/db/5432" 2>&1'; then
+            echo "✅ Backend → DB: Puerto 5432 accesible via nombre de servicio 'db'"
+          else
+            echo "❌ Backend → DB: Puerto 5432 NO accesible"
+            exit 1
+          fi
+          # Verificar logs de TypeORM conexión exitosa
+          if docker logs notipoli-back 2>&1 | grep -q "TypeOrmModule dependencies initialized"; then
+            echo "✅ Backend → DB: TypeORM inicializado correctamente (conexión BD OK)"
+          else
+            echo "⚠️ Revisar logs de backend para confirmar conexión BD"
+            docker logs notipoli-back --tail 30
+          fi
+
+      - name: Test API endpoints básicos
+        run: |
+          echo "Probando endpoints de la API..."
+          # Usuarios endpoint (seed data)
+          curl -f -s http://localhost:3000/usuarios | grep -q "juan@mail.com" && echo "✅ GET /usuarios - seed data OK" || echo "⚠️ GET /usuarios - revisar datos"
+          # Noticias endpoint
+          curl -s http://localhost:3000/noticias && echo "✅ GET /noticias" || echo "ℹ️ GET /noticias"
+
+      - name: Mostrar logs finales
+        if: always()
+        run: |
+          echo "=== LOGS BACKEND ==="
+          docker logs notipoli-back --tail 30
+          echo ""
+          echo "=== LOGS FRONTEND ==="
+          docker logs notipoli-front --tail 20
+          echo ""
+          echo "=== LOGS BD ==="
+          docker logs notipoli-db --tail 10
+
+      - name: Limpiar stack
+        if: always()
+        run: docker compose down -v
+
+  # Job 4: Verificar que no hay secretos en el código
+  security:
+    name: Seguridad - Sin secretos
+    runs-on: ubuntu-latest
+    needs: validate
+    steps:
+      - name: Checkout repositorio
+        uses: actions/checkout@v4
+
+      - name: Verificar que no hay .env reales en el repo
+        run: |
+          if git ls-files --error-unmatch '*/.env' 2>/dev/null; then
+            echo "❌ Se encontraron archivos .env trackeados por git"
+            exit 1
+          else
+            echo "✅ No hay .env en el repositorio"
+          fi
+
+      - name: Verificar que no hay contraseñas hardcodeadas
+        run: |
+          # Buscar patrones sospechosos (excluyendo .example y test files)
+          if grep -r -i "password\s*=\s*[\"'].*[\"']" --include="*.ts" --include="*.js" --include="*.json" --include="*.yml" --include="*.yaml" . \
+            | grep -v ".example" \
+            | grep -v "test" \
+            | grep -v "placeholder" \
+            | grep -v "your_password" \
+            | grep -v "change_me"; then
+            echo "⚠️ Posibles contraseñas hardcodeadas encontradas (revisar)"
+          else
+            echo "✅ No se detectaron contraseñas hardcodeadas obvias"
+          fi
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
