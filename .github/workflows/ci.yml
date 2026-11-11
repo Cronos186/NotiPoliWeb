@@ -151,8 +151,8 @@ jobs:
       - name: Test comunicación Backend → BD (vuelta - nombre de servicio)
         run: |
           echo "Probando comunicación backend → base de datos via nombre de servicio..."
-          # Verificar conectividad de red al puerto 5432
-          if docker exec notipoli-back sh -c 'timeout 2 bash -c "cat < /dev/null > /dev/tcp/db/5432" 2>&1'; then
+          # Verificar conectividad de red al puerto 5432 usando sh y /dev/tcp (compatible con alpine/bash)
+          if docker exec notipoli-back sh -c 'timeout 2 sh -c "cat < /dev/null > /dev/tcp/db/5432"'; then
             echo "✅ Backend → DB: Puerto 5432 accesible via nombre de servicio 'db'"
           else
             echo "❌ Backend → DB: Puerto 5432 NO accesible"
