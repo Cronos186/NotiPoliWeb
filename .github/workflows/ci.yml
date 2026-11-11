@@ -41,8 +41,12 @@ jobs:
           echo "Esperando a que los servicios estén healthy..."
           # Esperar hasta 60 segundos
           for i in {1..12}; do
-            STATUS=$(docker compose ps --format json | jq -r '.[].Health')
-            if [[ "$STATUS" == *"healthy"* && ! "$STATUS" == *"starting"* ]]; then
+            # Verificamos directamente el estado de salud de los servicios con formato simple
+            STATUS=$(docker compose ps --format '{{.Health}}')
+            echo "Estado actual: $STATUS"
+
+            # Si no hay contenedores en estado "starting" y todos dicen "healthy"
+            if [[ "$STATUS" != *"starting"* && "$STATUS" == *"healthy"* && ! "$STATUS" == *"unhealthy"* ]]; then
               echo "✅ Todos los servicios están healthy"
               exit 0
             fi
