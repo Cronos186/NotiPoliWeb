@@ -17,3 +17,7 @@ coverage/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+bd-postgres/data/
+*.log
+back-nest/tsconfig.tsbuildinfo

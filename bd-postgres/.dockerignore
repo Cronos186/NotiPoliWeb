@@ -1,0 +1,10 @@
+# Ignorar archivos no necesarios para build de bd-postgres
+data/
+*.md
+*.txt
+*.log
+.env
+.env.*
+.git
+.gitignore
+docker-compose.yml

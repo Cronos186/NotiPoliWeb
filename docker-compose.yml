@@ -1,0 +1,70 @@
+# Docker Compose unificado - NotiPoliWeb (3 servicios)
+# Uso: docker compose up -d
+# Requiere archivo .env en la raíz con DB_USER, DB_PASS, DB_NAME
+
+services:
+  db:
+    image: postgres:15
+    container_name: notipoli-db
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./bd-postgres/data:/var/lib/postgresql/data
+    networks:
+      - notipoli-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  back-nest:
+    build: ./back-nest
+    container_name: notipoli-back
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+      PORT: 3000
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - notipoli-net
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/usuarios"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+  front-react:
+    build: ./front-react
+    container_name: notipoli-front
+    ports:
+      - "8080:80"
+    environment:
+      REACT_APP_API_URL: http://back-nest:3000
+    depends_on:
+      - back-nest
+    networks:
+      - notipoli-net
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://127.0.0.1:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+networks:
+  notipoli-net:
+    driver: bridge

@@ -1,0 +1,12 @@
+services:
+  back-nest:
+    build: .
+    container_name: notipoli-back
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: host.docker.internal
+      DB_PORT: 5432
+      DB_USER: user
+      DB_PASS: password
+      DB_NAME: notipolibd
