@@ -27,7 +27,7 @@ La aplicación se ha separado en **3 servicios independientes** contenerizados c
 ┌─────────────────────┐     ┌─────────────────────┐     ┌─────────────────────┐
 │   front-react       │────▶│    back-nest        │────▶│    bd-postgres      │
 │   (Nginx + React)   │     │    (NestJS + TS)    │     │    (PostgreSQL 15)  │
-│   Puerto: 8080      │     │    Puerto: 3000     │     │    Puerto: 5432     │
+│   Puerto: 3001      │     │    Puerto: 3000     │     │    Puerto: 5432     │
 └─────────────────────┘     └─────────────────────┘     └─────────────────────┘
         │                           │                           │
         ▼                           ▼                           ▼
@@ -37,7 +37,7 @@ La aplicación se ha separado en **3 servicios independientes** contenerizados c
 
 | Servicio | Tecnología | Puerto | Descripción |
 |----------|------------|--------|-------------|
-| **front-react** | React 19 + Vite + Nginx | 8080 | Frontend SPA servido por Nginx |
+| **front-react** | React 19 + Vite + Nginx | 3001 | Frontend SPA servido por Nginx |
 | **back-nest** | NestJS + TypeORM | 3000 | API REST con validación y CORS |
 | **bd-postgres** | PostgreSQL 15 | 5432 | Base de datos relacional |
 
@@ -47,7 +47,7 @@ La aplicación se ha separado en **3 servicios independientes** contenerizados c
 
 ### Requisitos
 - **Docker** y **Docker Compose** instalados
-- Puertos libres: **8080**, **3000**, **5432**
+- Puertos libres: **3001**, **3000**, **5432**
 
 ---
 
@@ -73,7 +73,7 @@ docker compose ps
 ```
 
 **URLs de acceso:**
-- 🌐 **Frontend:** http://localhost:8080
+- 🌐 **Frontend:** http://localhost:3001
 - 🔧 **Backend API:** http://localhost:3000
 - 🗄️ **Base de datos:** localhost:5432 (user/password, db: notipolibd)
 
@@ -246,14 +246,14 @@ notipoli-web/
 
 ```mermaid
 flowchart LR
-    A[Browser] -->|HTTP :8080| B[Nginx\nfront-react]
+    A[Browser] -->|HTTP :3001| B[Nginx\nfront-react]
     B -->|API calls\nREACT_APP_API_URL| C[NestJS\nback-nest:3000]
     C -->|TypeORM\nDB_HOST=db| D[(PostgreSQL\ndb:5432)]
 ```
 
 - **Frontend → Backend:** `fetch()` a `http://back-nest:3000/...` (configurado en `REACT_APP_API_URL=http://back-nest:3000`)
 - **Backend → BD:** TypeORM conecta a `db:5432` (nombre de servicio en red `notipoli-net`)
-- **CORS:** Backend configurado para permitir `http://localhost:8080`
+- **CORS:** Backend configurado para permitir `http://localhost:3001`
 - **Red Docker:** Todos los servicios comparten la red `notipoli-net` (bridge)
 
 ---

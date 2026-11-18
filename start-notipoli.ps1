@@ -98,7 +98,7 @@ if ($frontLogs) { Write-Host $frontLogs -ForegroundColor DarkGray }
 Pop-Location
 
 Write-Host '=== Todo listo ===' -ForegroundColor Green
-Write-Host 'Frontend: http://localhost:8080'
+Write-Host 'Frontend: http://localhost:3001'
 Write-Host 'API: http://localhost:3000/noticias'
 Write-Host 'DB container: notipoli-db'
 Write-Host "Log de semilla guardado en: $logFile"

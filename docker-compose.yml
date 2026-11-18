@@ -51,7 +51,7 @@ services:
     build: ./front-react
     container_name: notipoli-front
     ports:
-      - "8080:80"
+      - "3001:80"
     environment:
       REACT_APP_API_URL: http://back-nest:3000
     depends_on:
