@@ -16,7 +16,6 @@ pipeline {
         stage('Build 3 Contenedores (Entrega 1)') {
             steps {
                 echo '=== ETAPA 2: Construyendo imágenes Docker (db-postgres, back-nest, front-react) ==='
-                // Inyectamos las credenciales de Jenkins directamente en memoria solo para este bloque
                 withCredentials([
                     string(credentialsId: 'db-user', variable: 'DB_USER'),
                     string(credentialsId: 'db-pass', variable: 'DB_PASS'),
@@ -29,7 +28,10 @@ pipeline {
 
         stage('Pruebas y Verificación Automática (3 Contenedores)') {
             steps {
-                echo '=== ETAPA 3: Levantando los 3 servicios y verificando comunicación por red bridge ==='
+                echo '=== ETAPA 3: Limpiando contenedores previos y levantando servicios ==='
+                // Limpieza previa para evitar conflictos con nombres de contenedores existentes
+                bat "${env.DOCKER_PATH} compose down -v || exit /b 0"
+
                 withCredentials([
                     string(credentialsId: 'db-user', variable: 'DB_USER'),
                     string(credentialsId: 'db-pass', variable: 'DB_PASS'),
