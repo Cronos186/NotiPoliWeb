@@ -37,17 +37,15 @@ pipeline {
                     string(credentialsId: 'db-pass', variable: 'DB_PASS'),
                     string(credentialsId: 'db-name', variable: 'DB_NAME')
                 ]) {
-                    // Pasamos las credenciales explícitamente al entorno de docker compose en Windows bat
                     bat "set DB_USER=${DB_USER}&& set DB_PASS=${DB_PASS}&& set DB_NAME=${DB_NAME}&& ${env.DOCKER_PATH} compose up -d --force-recreate"
                 }
                 bat "${env.DOCKER_PATH} compose ps"
 
                 echo 'Esperando inicialización de la base de datos y backend...'
-                // Método compatible con Windows bat para esperar (16 pings ~= 15 segundos)
                 bat 'ping 127.0.0.1 -n 16 > nul'
 
-                echo 'Verificando respuesta HTTP del Backend (puerto 3000)...'
-                bat 'curl -f http://localhost:3000/ || exit /b 1'
+                echo 'Verificando respuesta HTTP del Backend (puerto 3000 con curl -I)...'
+                bat 'curl -I http://localhost:3000/ || exit /b 1'
 
                 echo 'Verificando respuesta HTTP del Frontend (puerto 3001)...'
                 bat 'curl -f http://localhost:3001/ || exit /b 1'
