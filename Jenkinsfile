@@ -28,16 +28,19 @@ pipeline {
 
         stage('Pruebas y Verificación Automática (3 Contenedores)') {
             steps {
-                echo '=== ETAPA 3: Limpiando contenedores previos y levantando servicios ==='
-                // Limpieza previa para evitar conflictos con nombres de contenedores existentes
-                bat "${env.DOCKER_PATH} compose down -v || exit /b 0"
+                echo '=== ETAPA 3: Limpieza forzada y levantando servicios ==='
+                // 1. Limpieza total forzada para evitar conflictos de nombres
+                bat "${env.DOCKER_PATH} compose down -v --remove-orphans || exit /b 0"
+                // 2. Por si acaso, eliminamos contenedores específicos si quedaron huérfanos
+                bat "${env.DOCKER_PATH} rm -f notipoli-db notipoli-back notipoli-front || exit /b 0"
 
                 withCredentials([
                     string(credentialsId: 'db-user', variable: 'DB_USER'),
                     string(credentialsId: 'db-pass', variable: 'DB_PASS'),
                     string(credentialsId: 'db-name', variable: 'DB_NAME')
                 ]) {
-                    bat "${env.DOCKER_PATH} compose up -d"
+                    // 3. Levantamos con --force-recreate
+                    bat "${env.DOCKER_PATH} compose up -d --force-recreate"
                 }
                 bat "${env.DOCKER_PATH} compose ps"
 
