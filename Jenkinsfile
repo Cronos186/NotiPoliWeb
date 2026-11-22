@@ -12,15 +12,15 @@ pipeline {
         stage('Build 3 Contenedores (Entrega 1)') {
             steps {
                 echo '=== ETAPA 2: Construyendo imágenes Docker (db-postgres, back-nest, front-react) ==='
-                bat 'docker compose build'
+                bat '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" compose build'
             }
         }
 
         stage('Pruebas y Verificación Automática (3 Contenedores)') {
             steps {
                 echo '=== ETAPA 3: Levantando los 3 servicios y verificando comunicación por red bridge ==='
-                bat 'docker compose up -d'
-                bat 'docker compose ps'
+                bat '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" compose up -d'
+                bat '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" compose ps'
 
                 echo 'Esperando inicialización de la base de datos y backend...'
                 bat 'timeout /t 15 /nobreak > NUL'
@@ -37,7 +37,7 @@ pipeline {
     post {
         always {
             echo '=== BLOQUE POST: Limpieza del entorno de pruebas (deteniendo los 3 contenedores) ==='
-            bat 'docker compose down -v --rmi local || exit /b 0'
+            bat '"C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe" compose down -v --rmi local || exit /b 0'
         }
         success {
             echo '¡ÉXITO! El Pipeline de Jenkins validó correctamente los 3 contenedores y su comunicación.'
